@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CloveH₂O — Premium Clove Infused Water</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --clove:       #B85C2A;
+  --clove-deep:  #8A3D18;
+  --clove-mid:   #D4784A;
+  --clove-light: #EFA882;
+  --clove-pale:  #FDF0E8;
+  --clove-tint:  #FEF7F2;
+  --ink:         #1A1209;
+  --ink-mid:     #3D2A18;
+  --text:        #1A1209;
+  --text-2:      #5C4030;
+  --text-3:      #9A7A68;
+  --white:       #FFFFFF;
+  --off-white:   #FAFAF8;
+  --border:      rgba(184,92,42,0.12);
+  --border-mid:  rgba(184,92,42,0.22);
+  --green:       #3A7A4A;
+  --green-pale:  #EBF5EE;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--white);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #fff; }
+::-webkit-scrollbar-thumb { background: var(--clove-mid); border-radius: 2px; }
+
+/* ══════════════════════════════════
+   NAV
+══════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4rem;
+  height: 68px;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+}
+
+.logo-mark {
+  width: 40px; height: 40px;
+}
+
+.logo-wordmark {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.logo-wordmark span { color: var(--clove); }
+
+nav ul {
+  display: flex;
+  gap: 2.2rem;
+  list-style: none;
+}
+nav ul a {
+  color: var(--text-2);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  transition: color 0.25s;
+}
+nav ul a:hover { color: var(--clove); }
+
+.nav-shop {
+  background: var(--clove);
+  color: #fff !important;
+  padding: 0.55rem 1.4rem;
+  border-radius: 100px;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  transition: background 0.25s, transform 0.2s !important;
+}
+.nav-shop:hover { background: var(--clove-deep) !important; transform: translateY(-1px); }
+
+/* ══════════════════════════════════
+   HERO
+══════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 100px 4rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hbc-1 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, var(--clove-pale) 0%, transparent 70%);
+  top: -100px; right: -150px;
+  animation: gentlePulse 8s ease-in-out infinite;
+}
+.hbc-2 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(234,168,130,0.15) 0%, transparent 70%);
+  bottom: 10%; left: 5%;
+  animation: gentlePulse 11s ease-in-out infinite reverse;
+}
+@keyframes gentlePulse {
+  0%,100%{transform:scale(1);opacity:0.8}
+  50%{transform:scale(1.06);opacity:1}
+}
+
+.hero-left {
+  z-index:1;
+  padding-right: 3rem;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--green-pale);
+  border: 1px solid rgba(58,122,74,0.2);
+  color: var(--green);
+  padding: 0.35rem 0.9rem;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1.8rem;
+  opacity:0;
+  animation: slideIn 0.7s 0.2s forwards;
+}
+.hero-badge::before { content:'✓'; font-weight:700; }
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 5.5vw, 5rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 1.4rem;
+  opacity:0;
+  animation: slideIn 0.8s 0.35s forwards;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--clove);
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--text-2);
+  line-height: 1.75;
+  max-width: 440px;
+  margin-bottom: 2.4rem;
+  font-weight: 300;
+  opacity:0;
+  animation: slideIn 0.8s 0.5s forwards;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 3rem;
+  opacity:0;
+  animation: slideIn 0.8s 0.65s forwards;
+}
+
+.btn-fill {
+  background: var(--clove);
+  color: #fff;
+  padding: 0.9rem 2.2rem;
+  border-radius: 100px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+  box-shadow: 0 6px 24px rgba(184,92,42,0.25);
+}
+.btn-fill:hover {
+  background: var(--clove-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(184,92,42,0.35);
+}
+.btn-fill span { font-size: 1rem; }
+
+.btn-outline {
+  color: var(--clove);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-bottom: 1.5px solid var(--clove-light);
+  padding-bottom: 0.1rem;
+  transition: gap 0.25s, border-color 0.25s;
+}
+.btn-outline:hover { gap: 0.7rem; border-color: var(--clove); }
+
+.hero-trust {
+  display: flex;
+  gap: 1.8rem;
+  opacity:0;
+  animation: slideIn 0.8s 0.8s forwards;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-3);
+  font-weight: 400;
+}
+.trust-item .ti-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--clove-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+/* ── Hero Right / Bottle ── */
+.hero-right {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+  z-index:1;
+  height: calc(100vh - 100px);
+  opacity:0;
+  animation: fadeIn 1s 0.6s forwards;
+}
+
+.bottle-stage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 3rem;
+}
+
+.bottle-glow {
+  position: absolute;
+  bottom: 2rem;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(184,92,42,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(30px);
+  animation: gentlePulse 5s ease-in-out infinite;
+}
+
+.bottle-shadow {
+  position: absolute;
+  bottom: 2.5rem;
+  width: 140px; height: 22px;
+  background: radial-gradient(ellipse, rgba(184,92,42,0.2) 0%, transparent 70%);
+  filter: blur(8px);
+  animation: shadowPulse 4s ease-in-out infinite;
+}
+@keyframes shadowPulse {
+  0%,100%{transform:scaleX(1);opacity:0.8}
+  50%{transform:scaleX(0.85);opacity:0.5}
+}
+
+.main-bottle {
+  width: 200px;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 30px 50px rgba(184,92,42,0.2));
+  animation: bottleFloat 5s ease-in-out infinite;
+}
+@keyframes bottleFloat {
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-18px)}
+}
+
+/* Floating callouts */
+.bottle-callout {
+  position: absolute;
+  background: #fff;
+  border: 1px solid var(--border-mid);
+  border-radius: 14px;
+  padding: 0.8rem 1.1rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  font-size: 0.75rem;
+  color: var(--text-2);
+  font-weight: 400;
+  white-space: nowrap;
+  animation: floatCallout 4s ease-in-out infinite;
+}
+.bottle-callout strong {
+  display: block;
+  font-size: 1.1rem;
+  font-family: 'Playfair Display', serif;
+  color: var(--clove);
+  font-weight: 500;
+  line-height: 1.2;
+}
+.bc-left  { left: -60px; top: 30%; animation-delay: 0s; }
+.bc-right { right: -60px; top: 50%; animation-delay: 1.5s; }
+.bc-top   { left: 50%; transform: translateX(-50%); top: 5%; animation-delay: 0.8s; }
+
+@keyframes floatCallout {
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+.bc-left  { animation: floatCalloutL 4s ease-in-out infinite; }
+.bc-right { animation: floatCalloutR 4.5s ease-in-out infinite; }
+.bc-top   { animation: floatCalloutT 5s ease-in-out infinite; transform: translateX(-50%); }
+@keyframes floatCalloutL {
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+@keyframes floatCalloutR {
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+@keyframes floatCalloutT {
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(-6px)}
+}
+
+/* ── Stat ticker ── */
+.hero-ticker {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  border-top: 1px solid var(--border);
+  background: var(--white);
+  overflow: hidden;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+.ticker-track {
+  display: flex;
+  gap: 0;
+  animation: ticker 30s linear infinite;
+  white-space: nowrap;
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 2.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-3);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-right: 1px solid var(--border);
+}
+.ticker-dot { width:5px; height:5px; border-radius:50%; background:var(--clove-mid); flex-shrink:0; }
+
+/* ══════════════════════════════════
+   KEYPOINTS STRIP
+══════════════════════════════════ */
+#keypoints {
+  background: var(--clove);
+  padding: 3.5rem 4rem;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 0;
+}
+
+.kp-item {
+  padding: 0 2rem;
+  border-right: 1px solid rgba(255,255,255,0.15);
+  text-align: center;
+}
+.kp-item:last-child { border-right: none; }
+.kp-item:first-child { padding-left: 0; }
+
+.kp-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.kp-label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+
+/* ══════════════════════════════════
+   INGREDIENTS / TRUST BAR
+══════════════════════════════════ */
+#ingredients {
+  background: var(--off-white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.ing-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.ing-list {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.ing-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #fff;
+  border: 1px solid var(--border-mid);
+  border-radius: 100px;
+  padding: 0.45rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink-mid);
+}
+.ing-tag .it-icon { font-size: 0.9rem; }
+
+/* ══════════════════════════════════
+   BENEFITS
+══════════════════════════════════ */
+#benefits {
+  padding: 7rem 4rem;
+}
+
+.section-head {
+  max-width: 640px;
+  margin-bottom: 4rem;
+}
+.section-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clove);
+  display: block;
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 500;
+  line-height: 1.12;
+  color: var(--ink);
+}
+.section-title em { font-style: italic; color: var(--clove); }
+.section-sub {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: var(--text-2);
+  line-height: 1.75;
+  font-weight: 300;
+}
+
+/* Eugenol hero card */
+.eugenol-card {
+  background: var(--clove-pale);
+  border: 1px solid var(--border-mid);
+  border-radius: 24px;
+  padding: 2.5rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.eugenol-card::before {
+  content:'';
+  position:absolute;
+  top:-40px; right:-40px;
+  width:200px; height:200px;
+  background:radial-gradient(circle, rgba(184,92,42,0.12) 0%, transparent 70%);
+  border-radius:50%;
+}
+.eu-text h3 {
+  font-family:'Playfair Display',serif;
+  font-size: 1.5rem;
+  font-weight:500;
+  color:var(--ink);
+  margin-bottom:0.7rem;
+}
+.eu-text p {
+  font-size:0.9rem;
+  color:var(--text-2);
+  line-height:1.75;
+  max-width:520px;
+}
+.eu-stat {
+  text-align:center;
+  padding: 1.5rem 2rem;
+  background:#fff;
+  border:1px solid var(--border-mid);
+  border-radius:16px;
+  min-width:160px;
+  flex-shrink:0;
+}
+.eu-stat .big { font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:500; color:var(--clove); line-height:1; }
+.eu-stat .small { font-size:0.72rem; color:var(--text-3); margin-top:0.4rem; line-height:1.4; }
+
+/* Benefits grid */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1.2rem;
+}
+
+.benefit-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem 1.8rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+.benefit-card:hover {
+  border-color: var(--clove-mid);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(184,92,42,0.1);
+}
+.benefit-card::after {
+  content:'';
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:3px;
+  background:linear-gradient(90deg, var(--clove), var(--clove-light));
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.4s ease;
+}
+.benefit-card:hover::after { transform:scaleX(1); }
+
+.bc-icon {
+  width:48px; height:48px;
+  border-radius:14px;
+  background:var(--clove-pale);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.4rem;
+  margin-bottom:1.2rem;
+}
+.bc-title {
+  font-family:'Playfair Display',serif;
+  font-size:1.15rem;
+  font-weight:500;
+  color:var(--ink);
+  margin-bottom:0.6rem;
+  line-height:1.25;
+}
+.bc-desc {
+  font-size:0.84rem;
+  color:var(--text-2);
+  line-height:1.75;
+}
+.bc-source {
+  margin-top:1rem;
+  display:inline-flex;
+  align-items:center;
+  gap:0.35rem;
+  font-size:0.68rem;
+  color:var(--clove);
+  font-weight:500;
+  letter-spacing:0.04em;
+  opacity:0.8;
+}
+.bc-source::before { content:'◆'; font-size:0.5rem; }
+
+/* ══════════════════════════════════
+   PRODUCT SECTION
+══════════════════════════════════ */
+#product {
+  background: var(--off-white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 7rem 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.prod-img-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.prod-bg-circle {
+  position:absolute;
+  width:380px; height:380px;
+  border-radius:50%;
+  background:radial-gradient(circle, var(--clove-pale) 0%, transparent 65%);
+  animation:gentlePulse 6s ease-in-out infinite;
+}
+
+.prod-bottle {
+  width: 180px;
+  position:relative;
+  z-index:1;
+  filter:drop-shadow(0 24px 48px rgba(184,92,42,0.22));
+  animation:bottleFloat 5s ease-in-out infinite;
+}
+
+.prod-detail-chips {
+  display:flex;
+  flex-direction:column;
+  gap:0.8rem;
+  position:absolute;
+  right:-20px; top:50%;
+  transform:translateY(-50%);
+  z-index:2;
+}
+.pdc {
+  background:#fff;
+  border:1px solid var(--border-mid);
+  border-radius:12px;
+  padding:0.65rem 1rem;
+  font-size:0.75rem;
+  color:var(--text-2);
+  font-weight:500;
+  box-shadow:0 4px 16px rgba(0,0,0,0.06);
+  display:flex;
+  align-items:center;
+  gap:0.4rem;
+}
+.pdc .pdc-dot { width:8px; height:8px; border-radius:50%; background:var(--clove); flex-shrink:0; }
+
+.prod-info {}
+
+.prod-name {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,3.5vw,3rem);
+  font-weight:500;
+  line-height:1.1;
+  color:var(--ink);
+  margin-bottom:0.5rem;
+}
+.prod-name em { font-style:italic; color:var(--clove); }
+
+.prod-tagline {
+  font-size:0.75rem;
+  font-weight:500;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--clove);
+  margin-bottom:1.5rem;
+}
+
+.prod-divider { width:48px; height:2px; background:var(--clove-light); border-radius:2px; margin-bottom:1.5rem; }
+
+.prod-desc {
+  font-size:0.95rem;
+  color:var(--text-2);
+  line-height:1.8;
+  margin-bottom:2rem;
+  font-weight:300;
+}
+
+.prod-attrs {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0.7rem;
+  margin-bottom:2rem;
+}
+.pa {
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  font-size:0.82rem;
+  color:var(--text-2);
+  font-weight:400;
+}
+.pa-check {
+  width:20px; height:20px;
+  border-radius:50%;
+  background:var(--green-pale);
+  border:1px solid rgba(58,122,74,0.2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:0.6rem;
+  color:var(--green);
+  font-weight:700;
+  flex-shrink:0;
+}
+
+.prod-price-row {
+  display:flex;
+  align-items:baseline;
+  gap:0.8rem;
+  margin-bottom:1.8rem;
+}
+.prod-price {
+  font-family:'Playfair Display',serif;
+  font-size:2.2rem;
+  font-weight:500;
+  color:var(--ink);
+}
+.prod-price-note {
+  font-size:0.82rem;
+  color:var(--text-3);
+  font-weight:400;
+}
+
+.prod-actions { display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
+
+/* ══════════════════════════════════
+   SCIENCE CALLOUT
+══════════════════════════════════ */
+#science {
+  padding: 7rem 4rem;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.science-stats {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+}
+
+.sci-card {
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2rem 1.5rem;
+  text-align:center;
+  transition:border-color 0.3s, transform 0.3s;
+}
+.sci-card:hover { border-color:var(--clove-mid); transform:translateY(-4px); }
+.sci-card:first-child {
+  grid-column:1/-1;
+  background:var(--clove-pale);
+  border-color:var(--border-mid);
+}
+
+.sci-num {
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;
+  font-weight:500;
+  color:var(--clove);
+  line-height:1;
+  margin-bottom:0.4rem;
+}
+.sci-label {
+  font-size:0.8rem;
+  color:var(--text-2);
+  line-height:1.5;
+}
+.sci-source {
+  margin-top:0.7rem;
+  font-size:0.65rem;
+  color:var(--text-3);
+  letter-spacing:0.04em;
+}
+
+.science-text .section-head { margin-bottom:2rem; }
+
+.science-points {
+  display:flex;
+  flex-direction:column;
+  gap:1.2rem;
+}
+.sp {
+  display:flex;
+  gap:1rem;
+  align-items:flex-start;
+}
+.sp-icon {
+  width:40px; height:40px;
+  border-radius:12px;
+  background:var(--clove-pale);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.1rem;
+  flex-shrink:0;
+  margin-top:0.1rem;
+}
+.sp-body h4 {
+  font-size:0.9rem;
+  font-weight:500;
+  color:var(--ink);
+  margin-bottom:0.3rem;
+}
+.sp-body p {
+  font-size:0.82rem;
+  color:var(--text-2);
+  line-height:1.7;
+}
+
+/* ══════════════════════════════════
+   PROCESS
+══════════════════════════════════ */
+#process {
+  background:var(--clove-pale);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:7rem 4rem;
+}
+
+#process .section-head { text-align:center; max-width:560px; margin:0 auto 4rem; }
+
+.process-steps {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1.5rem;
+  position:relative;
+}
+.process-steps::before {
+  content:'';
+  position:absolute;
+  top:40px; left:calc(25% - 12px);
+  right:calc(25% - 12px);
+  height:1px;
+  background:var(--border-mid);
+  z-index:0;
+}
+
+.ps {
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2rem 1.5rem;
+  text-align:center;
+  position:relative;
+  z-index:1;
+  transition:transform 0.3s, box-shadow 0.3s;
+}
+.ps:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(184,92,42,0.1); }
+
+.ps-num {
+  width:36px; height:36px;
+  border-radius:50%;
+  background:var(--clove);
+  color:#fff;
+  font-size:0.8rem;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 1.2rem;
+}
+.ps-icon { font-size:1.8rem; display:block; margin-bottom:1rem; }
+.ps-title {
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;
+  font-weight:500;
+  color:var(--ink);
+  margin-bottom:0.6rem;
+}
+.ps-desc { font-size:0.8rem; color:var(--text-2); line-height:1.7; }
+
+/* ══════════════════════════════════
+   TESTIMONIALS
+══════════════════════════════════ */
+#testimonials {
+  padding:7rem 4rem;
+}
+#testimonials .section-head { text-align:center; max-width:540px; margin:0 auto 4rem; }
+
+.testi-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.2rem;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+.testi-card {
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2rem;
+  position:relative;
+  overflow:hidden;
+  transition:transform 0.3s, box-shadow 0.3s;
+}
+.testi-card:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,0.07); }
+
+.testi-stars { color:#F59E2A; font-size:0.8rem; letter-spacing:0.1em; margin-bottom:1rem; }
+
+.testi-quote {
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;
+  font-style:italic;
+  color:var(--ink);
+  line-height:1.65;
+  margin-bottom:1.5rem;
+}
+
+.testi-author { display:flex; align-items:center; gap:0.8rem; }
+.ta-avatar {
+  width:38px; height:38px;
+  border-radius:50%;
+  background:var(--clove-pale);
+  border:2px solid var(--border-mid);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1rem;
+  flex-shrink:0;
+}
+.ta-name { font-size:0.85rem; font-weight:500; color:var(--ink); }
+.ta-desc { font-size:0.72rem; color:var(--text-3); margin-top:0.1rem; }
+
+/* ══════════════════════════════════
+   CTA
+══════════════════════════════════ */
+#cta {
+  background:var(--clove);
+  padding:7rem 4rem;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+#cta::before {
+  content:'';
+  position:absolute;
+  top:-100px; left:50%;
+  transform:translateX(-50%);
+  width:600px; height:600px;
+  background:radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 65%);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.cta-eyebrow {
+  font-size:0.7rem;
+  font-weight:500;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.65);
+  margin-bottom:1rem;
+  display:block;
+}
+.cta-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,4.5vw,3.8rem);
+  font-weight:500;
+  color:#fff;
+  line-height:1.1;
+  margin-bottom:1.2rem;
+}
+.cta-title em { font-style:italic; opacity:0.85; }
+.cta-sub {
+  font-size:1rem;
+  color:rgba(255,255,255,0.75);
+  max-width:460px;
+  margin:0 auto 2.5rem;
+  line-height:1.75;
+  font-weight:300;
+}
+
+.cta-form {
+  display:flex;
+  gap:0.75rem;
+  max-width:420px;
+  margin:0 auto 1rem;
+}
+.cta-input {
+  flex:1;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.25);
+  border-radius:100px;
+  padding:0.85rem 1.4rem;
+  color:#fff;
+  font-family:'DM Sans',sans-serif;
+  font-size:0.85rem;
+  outline:none;
+  transition:background 0.3s, border-color 0.3s;
+}
+.cta-input::placeholder { color:rgba(255,255,255,0.5); }
+.cta-input:focus { background:rgba(255,255,255,0.22); border-color:rgba(255,255,255,0.5); }
+
+.btn-white {
+  background:#fff;
+  color:var(--clove-deep);
+  padding:0.85rem 1.8rem;
+  border-radius:100px;
+  font-family:'DM Sans',sans-serif;
+  font-size:0.85rem;
+  font-weight:600;
+  white-space:nowrap;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  gap:0.4rem;
+  transition:transform 0.2s, box-shadow 0.25s;
+  border:none;
+  cursor:pointer;
+}
+.btn-white:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.15); }
+
+.cta-note { font-size:0.72rem; color:rgba(255,255,255,0.5); margin-top:0.8rem; }
+
+/* ══════════════════════════════════
+   FOOTER
+══════════════════════════════════ */
+footer {
+  background:#fff;
+  border-top:1px solid var(--border);
+  padding:4.5rem 4rem 2rem;
+}
+
+.footer-grid {
+  display:grid;
+  grid-template-columns:1.8fr 1fr 1fr 1fr;
+  gap:3rem;
+  margin-bottom:3rem;
+}
+
+.footer-brand .logo-wordmark {
+  font-size:1.5rem;
+  display:block;
+  margin-bottom:1rem;
+}
+.footer-brand p {
+  font-size:0.83rem;
+  color:var(--text-3);
+  line-height:1.8;
+  max-width:260px;
+  margin-bottom:1.5rem;
+}
+
+.socials { display:flex; gap:0.6rem; }
+.social-btn {
+  width:34px; height:34px;
+  border-radius:50%;
+  border:1px solid var(--border-mid);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--text-3);
+  text-decoration:none;
+  font-size:0.8rem;
+  transition:border-color 0.25s, color 0.25s;
+}
+.social-btn:hover { border-color:var(--clove); color:var(--clove); }
+
+.footer-col h5 {
+  font-size:0.72rem;
+  font-weight:600;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--text);
+  margin-bottom:1.2rem;
+}
+.footer-col ul { list-style:none; }
+.footer-col li { margin-bottom:0.7rem; }
+.footer-col a {
+  font-size:0.84rem;
+  color:var(--text-3);
+  text-decoration:none;
+  transition:color 0.25s;
+}
+.footer-col a:hover { color:var(--clove); }
+
+.footer-bottom {
+  border-top:1px solid var(--border);
+  padding-top:1.5rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.footer-bottom p { font-size:0.75rem; color:var(--text-3); }
+.footer-certifications {
+  display:flex;
+  gap:1rem;
+  align-items:center;
+}
+.cert-badge {
+  display:inline-flex;
+  align-items:center;
+  gap:0.4rem;
+  font-size:0.7rem;
+  color:var(--text-3);
+  font-weight:500;
+  background:var(--off-white);
+  border:1px solid var(--border);
+  padding:0.3rem 0.8rem;
+  border-radius:100px;
+}
+
+/* ══════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════ */
+@keyframes slideIn {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+
+.reveal {
+  opacity:0;
+  transform:translateY(32px);
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-delay-1 { transition-delay:0.1s; }
+.reveal-delay-2 { transition-delay:0.2s; }
+.reveal-delay-3 { transition-delay:0.3s; }
+
+/* ══════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════ */
+@media(max-width:900px){
+  nav { padding:0 1.5rem; }
+  nav ul { display:none; }
+  #hero { grid-template-columns:1fr; padding:80px 1.5rem 60px; text-align:center; }
+  .hero-left { padding-right:0; }
+  .hero-ctas { justify-content:center; }
+  .hero-trust { justify-content:center; flex-wrap:wrap; }
+  .hero-right { height:340px; }
+  .bc-left,.bc-right,.bc-top { display:none; }
+  #keypoints { grid-template-columns:1fr 1fr; gap:1px; padding:3rem 1.5rem; }
+  .kp-item { padding:1.5rem 1rem; border:none; border-bottom:1px solid rgba(255,255,255,0.15); }
+  #ingredients { flex-direction:column; padding:1.5rem; align-items:flex-start; }
+  #benefits { padding:5rem 1.5rem; }
+  .benefits-grid { grid-template-columns:1fr; }
+  .eugenol-card { grid-template-columns:1fr; }
+  #product { grid-template-columns:1fr; padding:5rem 1.5rem; gap:3rem; }
+  .prod-detail-chips { display:none; }
+  #science { grid-template-columns:1fr; padding:5rem 1.5rem; gap:3rem; }
+  #process { padding:5rem 1.5rem; }
+  .process-steps { grid-template-columns:1fr 1fr; }
+  .process-steps::before { display:none; }
+  #testimonials { padding:5rem 1.5rem; }
+  .testi-grid { grid-template-columns:1fr; }
+  #cta { padding:5rem 1.5rem; }
+  .cta-form { flex-direction:column; }
+  footer { padding:3rem 1.5rem 2rem; }
+  .footer-grid { grid-template-columns:1fr 1fr; gap:2rem; }
+  .footer-bottom { flex-direction:column; gap:1rem; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo-link">
+    <svg class="logo-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Droplet -->
+      <path d="M20 3C20 3 7 17 7 25.5C7 32.9 12.9 39 20 39C27.1 39 33 32.9 33 25.5C33 17 20 3 20 3Z" fill="#FDF0E8" stroke="#B85C2A" stroke-width="1.2"/>
+      <!-- Clove stem -->
+      <rect x="19" y="26.5" width="2" height="5" rx="1" fill="#B85C2A"/>
+      <!-- Clove body bud -->
+      <ellipse cx="20" cy="22.5" rx="3" ry="4.2" fill="#B85C2A"/>
+      <!-- Clove head (round top) -->
+      <circle cx="20" cy="17.8" r="3.5" fill="#D4784A"/>
+      <!-- Highlight on head -->
+      <circle cx="18.8" cy="16.6" r="1" fill="rgba(255,255,255,0.35)"/>
+      <!-- Mini splash lines at base -->
+      <path d="M12 36 Q10 34 8 35" stroke="#B85C2A" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
+      <path d="M28 36 Q30 34 32 35" stroke="#B85C2A" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
+      <ellipse cx="20" cy="37.5" rx="6" ry="1.5" fill="rgba(184,92,42,0.1)"/>
+    </svg>
+    <span class="logo-wordmark">Clove<span>H₂O</span></span>
+  </a>
+  <ul>
+    <li><a href="#benefits">Benefits</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#science">Science</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#cta" class="nav-shop">Shop Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-circle hbc-1"></div>
+  <div class="hero-bg-circle hbc-2"></div>
+
+  <div class="hero-left">
+    <div class="hero-badge">Non-GMO · Reverse Osmosis Purified · 0g Sugar</div>
+    <h1 class="hero-title">
+      Hydration with<br>
+      <em>ancient power.</em><br>
+      Priced for <em>everyone.</em>
+    </h1>
+    <p class="hero-sub">
+      Pure reverse-osmosis water infused with non-GMO whole cloves — delivering one of nature's most potent antioxidants in every sip. Clean. Honest. Accessible.
+    </p>
+    <div class="hero-ctas">
+      <a href="#product" class="btn-fill"><span>🛒</span> Shop Now — from $3.49</a>
+      <a href="#benefits" class="btn-outline">See the benefits →</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item"><div class="ti-icon">🌿</div> Non-GMO Cloves</div>
+      <div class="trust-item"><div class="ti-icon">💧</div> RO Purified Water</div>
+      <div class="trust-item"><div class="ti-icon">✓</div> Zero Additives</div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="bottle-stage">
+      <div class="bottle-glow"></div>
+      <!-- Floating callouts -->
+      <div class="bottle-callout bc-top">
+        <strong>#1</strong>Antioxidant Spice
+      </div>
+      <div class="bottle-callout bc-left">
+        <strong>0g</strong>Sugar &amp; Calories
+      </div>
+      <div class="bottle-callout bc-right">
+        <strong>RO</strong>Purified Water
+      </div>
+
+      <!-- BOTTLE SVG -->
+      <svg class="main-bottle" viewBox="0 0 120 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="h2BottleGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stop-color="#e8f4f9" stop-opacity="1"/>
+            <stop offset="30%"  stop-color="#f5fbfe" stop-opacity="1"/>
+            <stop offset="60%"  stop-color="#dff0f8" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#c8e6f5" stop-opacity="1"/>
+          </linearGradient>
+          <linearGradient id="h2LiquidGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#EFA882" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#B85C2A" stop-opacity="0.35"/>
+          </linearGradient>
+          <linearGradient id="h2CapGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#e8e8e8"/>
+          </linearGradient>
+          <linearGradient id="h2LabelGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#fdf0e8" stop-opacity="0.95"/>
+          </linearGradient>
+          <filter id="bottleShadow" x="-20%" y="-5%" width="140%" height="120%">
+            <feDropShadow dx="2" dy="4" stdDeviation="6" flood-color="rgba(184,92,42,0.15)"/>
+          </filter>
+          <clipPath id="bodyClip">
+            <path d="M36 60 C24 70 20 85 20 100 L20 240 C20 252 28 260 40 262 L80 262 C92 260 100 252 100 240 L100 100 C100 85 96 70 84 60Z"/>
+          </clipPath>
+        </defs>
+
+        <!-- Cap / Lid -->
+        <rect x="44" y="16" width="32" height="18" rx="6" fill="url(#h2CapGrad)" stroke="#ddd" stroke-width="0.5"/>
+        <rect x="44" y="28" width="32" height="4" rx="0" fill="#e0e0e0"/>
+
+        <!-- Neck -->
+        <path d="M48 34 L44 62 L76 62 L72 34Z" fill="url(#h2BottleGrad)" stroke="rgba(184,92,42,0.1)" stroke-width="0.5"/>
+
+        <!-- Body -->
+        <path d="M36 62 C24 72 20 87 20 102 L20 242 C20 254 28 262 40 264 L80 264 C92 262 100 254 100 242 L100 102 C100 87 96 72 84 62Z" fill="url(#h2BottleGrad)" stroke="rgba(184,92,42,0.12)" stroke-width="0.8" filter="url(#bottleShadow)"/>
+
+        <!-- Liquid fill -->
+        <rect x="20" y="148" width="80" height="118" fill="url(#h2LiquidGrad)" clip-path="url(#bodyClip)"/>
+
+        <!-- Liquid surface wave -->
+        <path d="M20 148 Q40 142 60 148 Q80 154 100 148" fill="none" stroke="rgba(184,92,42,0.25)" stroke-width="1"/>
+
+        <!-- Highlight left -->
+        <path d="M30 80 C30 80 30 140 30 180" stroke="rgba(255,255,255,0.7)" stroke-width="5" stroke-linecap="round"/>
+        <!-- Highlight small -->
+        <path d="M38 70 C38 70 38 90 38 110" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round"/>
+
+        <!-- Label background -->
+        <rect x="26" y="108" width="68" height="100" rx="6" fill="url(#h2LabelGrad)"/>
+        <rect x="26" y="108" width="68" height="100" rx="6" fill="none" stroke="rgba(184,92,42,0.15)" stroke-width="0.5"/>
+
+        <!-- Label: top orange stripe -->
+        <rect x="26" y="108" width="68" height="8" rx="6" fill="rgba(184,92,42,0.12)"/>
+
+        <!-- Logo on label -->
+        <!-- Tiny droplet+clove icon -->
+        <path d="M57 122 C57 122 52 128 52 131.5 C52 134 54 136 57 136 C60 136 62 134 62 131.5 C62 128 57 122 57 122Z" fill="#FDF0E8" stroke="#B85C2A" stroke-width="0.6"/>
+        <circle cx="57" cy="129" r="1.8" fill="#D4784A"/>
+        <ellipse cx="57" cy="131.5" rx="1.5" ry="2.1" fill="#B85C2A"/>
+
+        <!-- Brand name on label -->
+        <text x="60" y="142" text-anchor="middle" fill="#B85C2A" font-size="5.5" font-family="Georgia, serif" font-weight="bold" letter-spacing="0.5">CloveH₂O</text>
+        <line x1="32" y1="145.5" x2="88" y2="145.5" stroke="rgba(184,92,42,0.2)" stroke-width="0.4"/>
+
+        <!-- Descriptor -->
+        <text x="60" y="152" text-anchor="middle" fill="#8A5040" font-size="3.2" font-family="Arial" letter-spacing="0.8">CLOVE INFUSED WATER</text>
+
+        <!-- Callout pills on label -->
+        <rect x="30" y="156" width="28" height="8" rx="4" fill="#FDF0E8" stroke="rgba(184,92,42,0.2)" stroke-width="0.4"/>
+        <text x="44" y="161.5" text-anchor="middle" fill="#B85C2A" font-size="3" letter-spacing="0.3">NON-GMO</text>
+
+        <rect x="62" y="156" width="28" height="8" rx="4" fill="#EBF5EE" stroke="rgba(58,122,74,0.2)" stroke-width="0.4"/>
+        <text x="76" y="161.5" text-anchor="middle" fill="#3A7A4A" font-size="3" letter-spacing="0.3">RO PURIFIED</text>
+
+        <text x="60" y="175" text-anchor="middle" fill="#aaa" font-size="3" letter-spacing="0.3">0 CAL · 0g SUGAR · 500mL</text>
+
+        <!-- Barcode lines suggestion -->
+        <rect x="44" y="179" width="1" height="8" fill="#ccc"/>
+        <rect x="46.5" y="179" width="2" height="8" fill="#ccc"/>
+        <rect x="50" y="179" width="1" height="8" fill="#ccc"/>
+        <rect x="52" y="179" width="1.5" height="8" fill="#ccc"/>
+        <rect x="54.5" y="179" width="1" height="8" fill="#ccc"/>
+        <rect x="56.5" y="179" width="2" height="8" fill="#ccc"/>
+        <rect x="59.5" y="179" width="1" height="8" fill="#ccc"/>
+        <rect x="61.5" y="179" width="1.5" height="8" fill="#ccc"/>
+        <rect x="64" y="179" width="1" height="8" fill="#ccc"/>
+        <rect x="66" y="179" width="2" height="8" fill="#ccc"/>
+        <rect x="69" y="179" width="1" height="8" fill="#ccc"/>
+        <rect x="71" y="179" width="1.5" height="8" fill="#ccc"/>
+        <rect x="73.5" y="179" width="1" height="8" fill="#ccc"/>
+
+        <!-- Bottom base curve -->
+        <path d="M20 242 Q20 264 40 264 L80 264 Q100 264 100 242" fill="rgba(200,180,160,0.15)"/>
+
+        <!-- Cap ridge detail -->
+        <rect x="44" y="26" width="32" height="2" rx="1" fill="rgba(0,0,0,0.05)"/>
+      </svg>
+
+      <div class="bottle-shadow"></div>
+    </div>
+  </div>
+
+  <!-- Ticker -->
+  <div class="hero-ticker">
+    <div class="ticker-track" id="ticker">
+      <div class="ticker-item"><span class="ticker-dot"></span>Non-GMO Certified Cloves</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Reverse Osmosis Purified Water</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Zero Sugar · Zero Calories</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>No Artificial Additives</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Rich in Eugenol Antioxidants</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Anti-Inflammatory Properties</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Supports Digestive Health</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>From $3.49 per bottle</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Non-GMO Certified Cloves</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Reverse Osmosis Purified Water</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Zero Sugar · Zero Calories</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>No Artificial Additives</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Rich in Eugenol Antioxidants</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Anti-Inflammatory Properties</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Supports Digestive Health</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>From $3.49 per bottle</div>
+    </div>
+  </div>
+</section>
+
+<!-- KEYPOINTS -->
+<div id="keypoints" class="reveal">
+  <div class="kp-item">
+    <div class="kp-num">290K+</div>
+    <div class="kp-label">ORAC Antioxidant Score — highest of any spice</div>
+  </div>
+  <div class="kp-item">
+    <div class="kp-num">80%</div>
+    <div class="kp-label">Free radical neutralization by eugenol compounds</div>
+  </div>
+  <div class="kp-item">
+    <div class="kp-num">0g</div>
+    <div class="kp-label">Sugar, artificial flavors, or preservatives</div>
+  </div>
+  <div class="kp-item">
+    <div class="kp-num">$3.49</div>
+    <div class="kp-label">Starting price — premium wellness for everyone</div>
+  </div>
+</div>
+
+<!-- INGREDIENTS TRUST BAR -->
+<div id="ingredients" class="reveal">
+  <span class="ing-label">What's inside →</span>
+  <div class="ing-list">
+    <div class="ing-tag"><span class="it-icon">💧</span> Reverse Osmosis Water</div>
+    <div class="ing-tag"><span class="it-icon">🌿</span> Non-GMO Whole Cloves</div>
+    <div class="ing-tag"><span class="it-icon">🚫</span> No Sugar</div>
+    <div class="ing-tag"><span class="it-icon">🚫</span> No Preservatives</div>
+    <div class="ing-tag"><span class="it-icon">🚫</span> No Artificial Flavors</div>
+    <div class="ing-tag"><span class="it-icon">✅</span> Non-GMO Verified</div>
+    <div class="ing-tag"><span class="it-icon">♻️</span> Recyclable Bottle</div>
+  </div>
+</div>
+
+<!-- BENEFITS -->
+<section id="benefits">
+  <div class="section-head reveal">
+    <span class="section-eyebrow">Science-Backed Benefits</span>
+    <h2 class="section-title">What cloves<br><em>actually do</em> for you</h2>
+    <p class="section-sub">Cloves have been used in traditional medicine for thousands of years — and modern science is confirming why. Here's what research shows about the active compounds in every bottle of CloveH₂O.</p>
+  </div>
+
+  <!-- Eugenol spotlight -->
+  <div class="eugenol-card reveal">
+    <div class="eu-text">
+      <h3>Meet Eugenol — the hero compound</h3>
+      <p>Eugenol is cloves' primary active ingredient, making up 45–90% of clove essential oil. It's classified as Generally Recognized As Safe (GRAS) by the FDA and has been studied extensively for its antioxidant, anti-inflammatory, and antimicrobial properties. Every bottle of CloveH₂O delivers eugenol naturally through our whole-clove cold infusion.</p>
+    </div>
+    <div class="eu-stat">
+      <div class="big">FDA</div>
+      <div class="small">GRAS Status<br>Generally Recognized As Safe</div>
+    </div>
+  </div>
+
+  <!-- Benefits cards -->
+  <div class="benefits-grid">
+    <div class="benefit-card reveal reveal-delay-1">
+      <div class="bc-icon">🛡️</div>
+      <h3 class="bc-title">Extraordinary Antioxidant Power</h3>
+      <p class="bc-desc">Cloves rank among the highest antioxidant capacity of any food ingredient, with an ORAC score exceeding 290,000 µmol TE per 100g — outperforming cinnamon, oregano, and blueberries. Eugenol neutralizes free radicals, protecting cells from oxidative stress.</p>
+      <span class="bc-source">PMC Antioxidant Study, 2023</span>
+    </div>
+    <div class="benefit-card reveal reveal-delay-2">
+      <div class="bc-icon">🔥</div>
+      <h3 class="bc-title">Natural Anti-Inflammatory</h3>
+      <p class="bc-desc">Eugenol inhibits key inflammatory pathways including NF-κB and suppresses pro-inflammatory cytokines (IL-6, TNF-α) — the same biological pathways targeted by many anti-inflammatory medications, but naturally and gently.</p>
+      <span class="bc-source">ACS Omega / NCBI, 2025</span>
+    </div>
+    <div class="benefit-card reveal reveal-delay-3">
+      <div class="bc-icon">🦷</div>
+      <h3 class="bc-title">Oral Health Support</h3>
+      <p class="bc-desc">Research shows clove compounds effectively reduce oral bacteria like Streptococcus mutans — inhibiting plaque, gingivitis, and harmful bacteria. Herbal rinses with clove outperformed commercial essential oil mouthwashes in clinical studies.</p>
+      <span class="bc-source">Medical News Today / NIH</span>
+    </div>
+    <div class="benefit-card reveal reveal-delay-1">
+      <div class="bc-icon">🌿</div>
+      <h3 class="bc-title">Digestive Comfort</h3>
+      <p class="bc-desc">Cloves stimulate the production of digestive enzymes and have recognized carminative properties — reducing gas and bloating. Studies also suggest clove extract may enhance stomach lining mucus production, supporting gut comfort.</p>
+      <span class="bc-source">MedicineNet / Traditional Medicine Research</span>
+    </div>
+    <div class="benefit-card reveal reveal-delay-2">
+      <div class="bc-icon">🩸</div>
+      <h3 class="bc-title">Blood Sugar Balance</h3>
+      <p class="bc-desc">Animal studies show clove extract and its compound nigericin reduced insulin resistance in muscle cells, improved glucose tolerance, and enhanced insulin secretion. Early research suggests cloves may help maintain healthy blood sugar levels.</p>
+      <span class="bc-source">Healthline / PMC Animal Studies</span>
+    </div>
+    <div class="benefit-card reveal reveal-delay-3">
+      <div class="bc-icon">🦠</div>
+      <h3 class="bc-title">Antimicrobial Defense</h3>
+      <p class="bc-desc">Laboratory studies confirm clove's eugenol, gallic acid, and tannins have powerful antimicrobial effects — with documented activity against bacteria including resistant Helicobacter pylori strains and urinary tract infection pathogens.</p>
+      <span class="bc-source">NCBI / Tropical Life Sciences Research</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section id="product">
+  <div class="prod-img-wrap reveal">
+    <div class="prod-bg-circle"></div>
+    <svg class="prod-bottle" viewBox="0 0 120 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="pb2" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#e0eef6"/>
+          <stop offset="50%"  stop-color="#f4fafd"/>
+          <stop offset="100%" stop-color="#c8e2f0"/>
+        </linearGradient>
+        <linearGradient id="pl2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#EFA882" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#B85C2A" stop-opacity="0.38"/>
+        </linearGradient>
+        <linearGradient id="plabel2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fff" stop-opacity="0.97"/>
+          <stop offset="100%" stop-color="#fdf0e8" stop-opacity="0.95"/>
+        </linearGradient>
+        <clipPath id="bodyClip2">
+          <path d="M36 60 C24 70 20 85 20 100 L20 240 C20 252 28 260 40 262 L80 262 C92 260 100 252 100 240 L100 100 C100 85 96 70 84 60Z"/>
+        </clipPath>
+      </defs>
+      <rect x="44" y="16" width="32" height="18" rx="6" fill="#f0f0f0" stroke="#ddd" stroke-width="0.5"/>
+      <rect x="44" y="28" width="32" height="4" fill="#e0e0e0"/>
+      <path d="M48 34 L44 62 L76 62 L72 34Z" fill="url(#pb2)"/>
+      <path d="M36 62 C24 72 20 87 20 102 L20 242 C20 254 28 262 40 264 L80 264 C92 262 100 254 100 242 L100 102 C100 87 96 72 84 62Z" fill="url(#pb2)" stroke="rgba(184,92,42,0.12)" stroke-width="0.8"/>
+      <rect x="20" y="148" width="80" height="118" fill="url(#pl2)" clip-path="url(#bodyClip2)"/>
+      <path d="M20 148 Q40 142 60 148 Q80 154 100 148" fill="none" stroke="rgba(184,92,42,0.22)" stroke-width="1"/>
+      <path d="M30 80 C30 80 30 140 30 180" stroke="rgba(255,255,255,0.7)" stroke-width="5" stroke-linecap="round"/>
+      <rect x="26" y="108" width="68" height="100" rx="6" fill="url(#plabel2)"/>
+      <rect x="26" y="108" width="68" height="8" rx="3" fill="rgba(184,92,42,0.12)"/>
+      <path d="M57 122 C57 122 52 128 52 131.5 C52 134 54 136 57 136 C60 136 62 134 62 131.5 C62 128 57 122 57 122Z" fill="#FDF0E8" stroke="#B85C2A" stroke-width="0.6"/>
+      <circle cx="57" cy="129" r="1.8" fill="#D4784A"/>
+      <ellipse cx="57" cy="131.5" rx="1.5" ry="2.1" fill="#B85C2A"/>
+      <text x="60" y="142" text-anchor="middle" fill="#B85C2A" font-size="5.5" font-family="Georgia,serif" font-weight="bold" letter-spacing="0.5">CloveH₂O</text>
+      <line x1="32" y1="145.5" x2="88" y2="145.5" stroke="rgba(184,92,42,0.2)" stroke-width="0.4"/>
+      <text x="60" y="152" text-anchor="middle" fill="#8A5040" font-size="3.2" font-family="Arial" letter-spacing="0.8">ORIGINAL BLEND · 500mL</text>
+      <rect x="30" y="156" width="28" height="8" rx="4" fill="#FDF0E8" stroke="rgba(184,92,42,0.2)" stroke-width="0.4"/>
+      <text x="44" y="161.5" text-anchor="middle" fill="#B85C2A" font-size="3" letter-spacing="0.3">NON-GMO</text>
+      <rect x="62" y="156" width="28" height="8" rx="4" fill="#EBF5EE" stroke="rgba(58,122,74,0.2)" stroke-width="0.4"/>
+      <text x="76" y="161.5" text-anchor="middle" fill="#3A7A4A" font-size="3" letter-spacing="0.3">RO PURIFIED</text>
+      <text x="60" y="175" text-anchor="middle" fill="#aaa" font-size="2.8" letter-spacing="0.3">0 CAL · 0g SUGAR</text>
+    </svg>
+    <div class="prod-detail-chips">
+      <div class="pdc"><span class="pdc-dot"></span> Non-GMO Cloves</div>
+      <div class="pdc"><span class="pdc-dot"></span> RO Purified Water</div>
+      <div class="pdc"><span class="pdc-dot"></span> Cold Infused</div>
+      <div class="pdc"><span class="pdc-dot"></span> Glass Recyclable</div>
+      <div class="pdc"><span class="pdc-dot"></span> 0 Calories</div>
+    </div>
+  </div>
+
+  <div class="prod-info reveal">
+    <p class="prod-tagline">Flagship Product</p>
+    <h2 class="prod-name">Original<br><em>Clove Infusion</em></h2>
+    <div class="prod-divider"></div>
+    <p class="prod-desc">Two ingredients. Infinite benefit. We cold-steep non-GMO whole cloves in reverse-osmosis purified water — nothing else. No sugar, no flavor enhancers, no shortcuts. Just water the way it should taste, working the way nature intended.</p>
+
+    <div class="prod-attrs">
+      <div class="pa"><div class="pa-check">✓</div> Non-GMO Certified Cloves</div>
+      <div class="pa"><div class="pa-check">✓</div> Reverse Osmosis Water</div>
+      <div class="pa"><div class="pa-check">✓</div> Zero Sugar &amp; Calories</div>
+      <div class="pa"><div class="pa-check">✓</div> No Preservatives</div>
+      <div class="pa"><div class="pa-check">✓</div> No Artificial Flavors</div>
+      <div class="pa"><div class="pa-check">✓</div> Recyclable Packaging</div>
+      <div class="pa"><div class="pa-check">✓</div> Cold Infusion Process</div>
+      <div class="pa"><div class="pa-check">✓</div> Third-Party Lab Tested</div>
+    </div>
+
+    <div class="prod-price-row">
+      <div class="prod-price">$3.49</div>
+      <div class="prod-price-note">per 500mL bottle<br>$33.99 / 12-pack · Free shipping over $50</div>
+    </div>
+
+    <div class="prod-actions">
+      <a href="#cta" class="btn-fill"><span>🛒</span> Add to Cart</a>
+      <a href="#cta" class="btn-outline">Subscribe &amp; Save 15% →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SCIENCE -->
+<section id="science">
+  <div class="science-stats reveal">
+    <div class="sci-card">
+      <div class="sci-num">290,000+</div>
+      <div class="sci-label">ORAC antioxidant units per 100g — cloves top every common spice and most superfoods</div>
+      <div class="sci-source">ORAC Database · 2023 PMC Analysis</div>
+    </div>
+    <div class="sci-card">
+      <div class="sci-num">80%</div>
+      <div class="sci-label">Free radical scavenging activity shown by eugenol in DPPH antioxidant assays</div>
+      <div class="sci-source">ACS Omega, 2025 (NCBI PMC12290672)</div>
+    </div>
+    <div class="sci-card">
+      <div class="sci-num">45–90%</div>
+      <div class="sci-label">Eugenol concentration in clove essential oil — primary driver of biological activity</div>
+      <div class="sci-source">ACS Omega / Federal University of Viçosa</div>
+    </div>
+    <div class="sci-card">
+      <div class="sci-num">3,000+</div>
+      <div class="sci-label">Years of documented traditional medicinal use across cultures worldwide</div>
+      <div class="sci-source">Ayurveda · Traditional Chinese Medicine · TCM</div>
+    </div>
+  </div>
+
+  <div class="science-text reveal">
+    <div class="section-head">
+      <span class="section-eyebrow">The Research</span>
+      <h2 class="section-title">Backed by<br><em>real science</em></h2>
+      <p class="section-sub">We don't make claims we can't back up. Every benefit we highlight is supported by published research.</p>
+    </div>
+    <div class="science-points">
+      <div class="sp">
+        <div class="sp-icon">🔬</div>
+        <div class="sp-body">
+          <h4>NF-κB Pathway Inhibition</h4>
+          <p>Eugenol blocks the NF-κB inflammatory signaling pathway — a key target in managing chronic inflammation — matching mechanisms used by many pharmaceutical anti-inflammatories.</p>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-icon">🧬</div>
+        <div class="sp-body">
+          <h4>TNF-α Reduction</h4>
+          <p>Studies confirm clove extracts significantly reduce tumor necrosis factor alpha (TNF-α) levels — a critical marker of systemic inflammation linked to chronic disease.</p>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-icon">🛡️</div>
+        <div class="sp-body">
+          <h4>FDA GRAS Designation</h4>
+          <p>Eugenol from cloves carries FDA "Generally Recognized As Safe" status for food use — meaning it's been reviewed and deemed safe for consumption at typical culinary levels.</p>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-icon">⚗️</div>
+        <div class="sp-body">
+          <h4>Third-Party Lab Verified</h4>
+          <p>Every CloveH₂O batch is independently tested for eugenol concentration, purity, and microbial safety before bottling. We share our certificates on request.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-head reveal">
+    <span class="section-eyebrow">How We Make It</span>
+    <h2 class="section-title">Two ingredients.<br><em>Zero shortcuts.</em></h2>
+  </div>
+  <div class="process-steps">
+    <div class="ps reveal reveal-delay-1">
+      <div class="ps-num">01</div>
+      <span class="ps-icon">🌿</span>
+      <h3 class="ps-title">Source Non-GMO Cloves</h3>
+      <p class="ps-desc">We source certified non-GMO whole clove buds from verified farms — hand-selected at peak aromatic and bioactive potency.</p>
+    </div>
+    <div class="ps reveal reveal-delay-2">
+      <div class="ps-num">02</div>
+      <span class="ps-icon">💧</span>
+      <h3 class="ps-title">Reverse Osmosis Purification</h3>
+      <p class="ps-desc">Our water base is triple-filtered through reverse osmosis — removing impurities, chemicals, and contaminants to achieve the purest possible foundation.</p>
+    </div>
+    <div class="ps reveal reveal-delay-3">
+      <div class="ps-num">03</div>
+      <span class="ps-icon">❄️</span>
+      <h3 class="ps-title">Cold Infusion</h3>
+      <p class="ps-desc">Whole cloves are cold-steeped at low temperature — preserving the full spectrum of bioactive eugenol and antioxidant compounds without heat degradation.</p>
+    </div>
+    <div class="ps reveal reveal-delay-3">
+      <div class="ps-num">04</div>
+      <span class="ps-icon">✅</span>
+      <h3 class="ps-title">Test &amp; Bottle</h3>
+      <p class="ps-desc">Every batch is third-party tested for purity and eugenol levels. Only batches that pass are sealed and shipped to you in recyclable packaging.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-head reveal">
+    <span class="section-eyebrow">Real People</span>
+    <h2 class="section-title">What people<br><em>are saying</em></h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal reveal-delay-1">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"I switched from sugary sports drinks and my digestion has never felt better. The flavor is subtle and clean — not what I expected but I love it."</p>
+      <div class="testi-author">
+        <div class="ta-avatar">🧘</div>
+        <div>
+          <div class="ta-name">Maria T.</div>
+          <div class="ta-desc">Fitness Coach · Austin, TX</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal reveal-delay-2">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"As someone who watches every label, I appreciate that it's literally just two ingredients. The RO water and non-GMO cloves is exactly what I want — and the price is fair."</p>
+      <div class="testi-author">
+        <div class="ta-avatar">👨‍⚕️</div>
+        <div>
+          <div class="ta-name">Dr. James K.</div>
+          <div class="ta-desc">Functional Medicine · Portland, OR</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal reveal-delay-3">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"Premium wellness water that doesn't cost $8? CloveH₂O is in my fridge every week. The anti-inflammatory effect after workouts is real — I'm a convert."</p>
+      <div class="testi-author">
+        <div class="ta-avatar">🏃</div>
+        <div>
+          <div class="ta-name">Priya S.</div>
+          <div class="ta-desc">Marathon Runner · Chicago, IL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <span class="cta-eyebrow">Start Your Ritual</span>
+  <h2 class="cta-title">Premium hydration.<br><em>Everyday price.</em></h2>
+  <p class="cta-sub">Join thousands who've made CloveH₂O part of their daily routine. Get 20% off your first order when you sign up.</p>
+  <div class="cta-form">
+    <input class="cta-input" type="email" placeholder="your@email.com">
+    <button class="btn-white">Claim 20% Off →</button>
+  </div>
+  <p class="cta-note">No spam. Unsubscribe anytime. We hate junk email too.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo-wordmark">Clove<span>H₂O</span></span>
+      <p>Premium clove infused water made with non-GMO cloves and reverse osmosis purified water. Clean hydration with real benefits — priced for everyone.</p>
+      <div class="socials">
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">◎</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">♪</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Shop</h5>
+      <ul>
+        <li><a href="#">Original Blend 500mL</a></li>
+        <li><a href="#">12-Pack Case</a></li>
+        <li><a href="#">Subscribe &amp; Save</a></li>
+        <li><a href="#">Gift Packs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Learn</h5>
+      <ul>
+        <li><a href="#">The Science</a></li>
+        <li><a href="#">Our Process</a></li>
+        <li><a href="#">Clove Benefits</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Wholesale</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 CloveH₂O · cloveh2o.com · All rights reserved.</p>
+    <div class="footer-certifications">
+      <span class="cert-badge">✓ Non-GMO Verified</span>
+      <span class="cert-badge">💧 RO Purified</span>
+      <span class="cert-badge">🔬 Lab Tested</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+reveals.forEach(el => observer.observe(el));
+
+// Nav scroll state
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.boxShadow = window.scrollY > 20
+    ? '0 2px 20px rgba(0,0,0,0.07)' : '';
+});
+
+// Animate count-up on keypoints
+const kpNums = document.querySelectorAll('.kp-num');
+const kpObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.style.opacity = '1'; kpObserver.unobserve(e.target); }
+  });
+}, { threshold: 0.5 });
+kpNums.forEach(el => kpObserver.observe(el));
+</script>
+</body>
+</html>
