@@ -1064,6 +1064,112 @@ nav ul a:hover { color: var(--clove); }
 .cta-note { font-size:0.72rem; color:rgba(255,255,255,0.5); margin-top:0.8rem; }
 
 /* ══════════════════════════════════
+   BIOS
+══════════════════════════════════ */
+founders {
+  padding: 7rem 4rem;
+  background: var(--off-white);
+  border-top: 1px solid var(--border);
+}
+.founders-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.founder-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.founder-card:hover {
+  border-color: var(--clove-mid);
+  box-shadow: 0 12px 40px rgba(184,92,42,0.08);
+}
+.founder-top {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.founder-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--clove), var(--clove-deep));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  flex-shrink: 0;
+}
+.founder-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+.founder-role {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--clove);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.founder-bio {
+  font-size: 0.88rem;
+  color: var(--text-2);
+  line-height: 1.82;
+  font-weight: 300;
+  border-left: 2px solid var(--clove-light);
+  padding-left: 1.2rem;
+}
+.founder-bio strong { color: var(--ink); font-weight: 500; }
+.founder-specs { display: flex; flex-direction: column; gap: 1.4rem; }
+.fs-block h4 {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 0.8rem;
+}
+.spec-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.spec-tag {
+  background: var(--clove-pale);
+  border: 1px solid var(--border-mid);
+  color: var(--clove-deep);
+  padding: 0.3rem 0.85rem;
+  border-radius: 100px;
+  font-size: 0.74rem;
+  font-weight: 500;
+}
+.founder-achievements { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+.founder-achievements li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.84rem;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+.founder-achievements li::before {
+  content: '◆';
+  color: var(--clove-mid);
+  font-size: 0.45rem;
+  margin-top: 0.42rem;
+  flex-shrink: 0;
+}
+  
+/* ══════════════════════════════════
    FOOTER
 ══════════════════════════════════ */
 footer {
@@ -1201,6 +1307,8 @@ footer {
   .testi-grid { grid-template-columns:1fr; }
   #cta { padding:5rem 1.5rem; }
   .cta-form { flex-direction:column; }
+  #founders { padding:5rem 1.5rem; }
+  .founders-grid { grid-template-columns:1fr; }
   footer { padding:3rem 1.5rem 2rem; }
   .footer-grid { grid-template-columns:1fr 1fr; gap:2rem; }
   .footer-bottom { flex-direction:column; gap:1rem; text-align:center; }
@@ -1720,6 +1828,85 @@ footer {
     <button class="btn-white">Claim 20% Off →</button>
   </div>
   <p class="cta-note">No spam. Unsubscribe anytime. We hate junk email too.</p>
+</section>
+
+<!-- BIOS -->
+<section id="founders">
+  <div class="section-head reveal" style="text-align:center; max-width:600px; margin:0 auto 4rem;">
+    <span class="section-eyebrow">The People Behind the Pour</span>
+    <h2 class="section-title">Meet the<br><em>Co-Founders</em></h2>
+    <p class="section-sub">CloveH₂O was built by two people who share a belief that functional wellness shouldn't come with a luxury price tag.</p>
+  </div>
+
+  <div class="founders-grid">
+
+    <div class="founder-card reveal">
+      <div class="founder-top">
+        <div class="founder-avatar">BL</div>
+        <div class="founder-id">
+          <h3 class="founder-name">Brian Leonard</h3>
+          <p class="founder-role">Co-Founder · Technology &amp; Strategy</p>
+        </div>
+      </div>
+      <p class="founder-bio">Brian brings a rare combination of analytical rigor and entrepreneurial vision to CloveH₂O. Prior to co-founding the brand, Brian built <strong>Alpha Quant Analytics (AQA)</strong> — a quantitative trading platform designed to automate asset allocation, trading, and risk management end-to-end. He spent four years at <strong>PIMCO</strong>, working directly with many of the firm's top client relationships, and served as Head of Investment Analytics and Trading for two Registered Investment Advisors, overseeing portfolio management for <strong>$2B+ in client assets</strong>. In the late 2000s, Brian helped pioneer algorithmic trading within managed accounts for thousands of retirement investors — utilizing his expertise in finance, technology, and marketing to transform a firm during a pivotal moment in its 20+ year history.</p>
+      <div class="founder-specs">
+        <div class="fs-block">
+          <h4>Specializations</h4>
+          <div class="spec-tags">
+            <span class="spec-tag">Software Development</span>
+            <span class="spec-tag">Agentic AI</span>
+            <span class="spec-tag">Quantitative Trading</span>
+            <span class="spec-tag">Risk Management</span>
+            <span class="spec-tag">Investment Management</span>
+            <span class="spec-tag">Process Automation</span>
+          </div>
+        </div>
+        <div class="fs-block">
+          <h4>Key Achievements</h4>
+          <ul class="founder-achievements">
+            <li>Pioneered quantitative trading for retirement investors in the early days of Target Date Funds</li>
+            <li>Developed quant trading platform to analyze market conditions algorithmically and place trades autonomously</li>
+            <li>Grew Assets Under Management 5× in under three years</li>
+            <li>Member of Mensa</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="founder-card reveal reveal-delay-2">
+      <div class="founder-top">
+        <div class="founder-avatar" style="background:linear-gradient(135deg,#1a4a6e,#2e7ab5);">MH</div>
+        <div class="founder-id">
+          <h3 class="founder-name">Michael Hughes</h3>
+          <p class="founder-role">Co-Founder · Food &amp; Beverage Operations</p>
+        </div>
+      </div>
+      <p class="founder-bio">Michael brings over <strong>25 years of food and beverage industry experience</strong> to CloveH₂O — from concept development and supply chain to retail distribution and brand scaling. He has spent his career building and operating beverage brands from the ground up, developing deep expertise in product formulation, regulatory compliance, and bringing functional drinks to mass-market consumers without sacrificing ingredient integrity. Michael has worked across every tier of the F&amp;B value chain — from sourcing and production to placement in national retail channels — giving CloveH₂O an operational foundation that most emerging beverage brands spend years trying to build. His philosophy is simple: <strong>great ingredients + honest pricing = a brand people trust</strong>. Michael's network and operational expertise are the engine that brings CloveH₂O from concept to shelf.</p>
+      <div class="founder-specs">
+        <div class="fs-block">
+          <h4>Specializations</h4>
+          <div class="spec-tags">
+            <span class="spec-tag">Beverage Formulation</span>
+            <span class="spec-tag">Supply Chain</span>
+            <span class="spec-tag">Retail Distribution</span>
+            <span class="spec-tag">Brand Development</span>
+            <span class="spec-tag">Regulatory Compliance</span>
+            <span class="spec-tag">Operations &amp; Scaling</span>
+          </div>
+        </div>
+        <div class="fs-block">
+          <h4>Key Achievements</h4>
+          <ul class="founder-achievements">
+            <li>25+ years scaling F&amp;B brands from startup through national retail distribution</li>
+            <li>Established supplier relationships across non-GMO and organic ingredient networks</li>
+            <li>Guided multiple beverage brands through FDA labeling, GRAS compliance, and retail certification</li>
+            <li>Built production and co-packing operations across multiple product categories</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <!-- FOOTER -->
