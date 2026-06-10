@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SentAIent Orchestrator — Marketing Command</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #050508;
+  --surface:  #0D0D16;
+  --surface2: #13131F;
+  --surface3: #1A1A28;
+  --border:   rgba(255,255,255,0.07);
+  --border2:  rgba(255,255,255,0.12);
+  --cyan:     #00D4FF;
+  --cyan-dim: rgba(0,212,255,0.12);
+  --cyan-mid: rgba(0,212,255,0.35);
+  --orange:   #FF6B35;
+  --orange-dim: rgba(255,107,53,0.12);
+  --green:    #00E676;
+  --green-dim:rgba(0,230,118,0.1);
+  --yellow:   #FFD600;
+  --red:      #FF3B5C;
+  --text:     #F0F0F8;
+  --text-2:   rgba(240,240,248,0.6);
+  --text-3:   rgba(240,240,248,0.3);
+  --mono:     'JetBrains Mono', monospace;
+  --sans:     'Space Grotesk', sans-serif;
+
+  /* brand colors for brand pills */
+  --clove:    #B85C2A;
+  --mindwave: #7B5EA7;
+  --sentaient: #00D4FF;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 300;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── GRID LAYOUT ── */
+.app {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: 56px 1fr;
+  min-height: 100vh;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  grid-column: 1 / -1;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.topbar-logo {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  background: var(--cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--bg);
+}
+.topbar-name {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+.topbar-name span { color: var(--cyan); }
+
+.topbar-status {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-2);
+}
+.status-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s infinite;
+}
+.status-dot.offline { background: var(--red); animation: none; }
+.status-dot.pending { background: var(--yellow); }
+@keyframes pulse {
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:0.6;transform:scale(0.85)}
+}
+
+.topbar-time {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-3);
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+}
+
+.sidebar-section {
+  padding: 0 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+.sidebar-section:last-child { border-bottom:none; }
+
+.sidebar-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding: 0 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.83rem;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  font-family: var(--sans);
+}
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active { background: var(--cyan-dim); color: var(--cyan); }
+.nav-item .nav-icon { font-size: 0.95rem; width: 18px; text-align: center; }
+.nav-item .nav-badge {
+  margin-left: auto;
+  background: var(--orange);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+/* Brand pills in sidebar */
+.brand-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: background 0.2s;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  font-family: var(--sans);
+}
+.brand-pill:hover { background: var(--surface2); }
+.bp-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── MAIN CONTENT ── */
+.main {
+  overflow-y: auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── PANELS ── */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.panel-title {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.panel-title .pt-icon { color: var(--cyan); }
+
+.panel-action {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--cyan);
+  cursor: pointer;
+  background: var(--cyan-dim);
+  border: 1px solid var(--cyan-mid);
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.panel-action:hover { background: rgba(0,212,255,0.2); }
+
+/* ── STAT CARDS ROW ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:2px;
+  background: var(--accent, var(--cyan));
+}
+.sc-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.sc-num {
+  font-family: var(--mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.sc-sub {
+  font-size: 0.72rem;
+  color: var(--text-3);
+}
+
+/* ── CAMPAIGN FORM ── */
+.campaign-form {
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group { display:flex; flex-direction:column; gap:0.4rem; }
+.form-group.full { grid-column: 1 / -1; }
+
+.form-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.form-input, .form-select, .form-textarea {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.08);
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--text-3); }
+.form-select option { background: var(--surface2); }
+.form-textarea { resize: vertical; min-height: 80px; }
+
+.format-checks {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.format-check {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-2);
+  cursor: pointer;
+}
+.format-check input { accent-color: var(--cyan); }
+
+.form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+  margin-top: 0.5rem;
+}
+
+.btn-primary {
+  background: var(--cyan);
+  color: var(--bg);
+  border: none;
+  padding: 0.7rem 1.8rem;
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: opacity 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-2);
+  border: 1px solid var(--border2);
+  padding: 0.7rem 1.4rem;
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-secondary:hover { border-color: var(--text-2); color: var(--text); }
+
+/* ── CAMPAIGN LOG ── */
+.campaign-log {
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 120px 90px 120px 1fr 120px 100px;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  gap: 1rem;
+  transition: background 0.2s;
+}
+.log-entry:last-child { border-bottom: none; }
+.log-entry:hover { background: var(--surface2); }
+.log-entry.header {
+  color: var(--text-3);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border2);
+}
+
+.le-id { color: var(--cyan); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.le-brand { }
+.brand-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 5px;
+  font-size: 0.68rem;
+  font-weight: 500;
+}
+.bt-cloveh2o  { background:rgba(184,92,42,0.15); color:#D4784A; }
+.bt-mindwave  { background:rgba(123,94,167,0.15); color:#B89FD4; }
+.bt-sentaient { background:rgba(0,212,255,0.12); color:var(--cyan); }
+
+.le-type { color: var(--text-2); }
+.le-hook { color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.le-confidence {}
+.conf-bar { display:flex; align-items:center; gap:0.4rem; }
+.conf-track {
+  flex:1; height:3px; border-radius:2px;
+  background: var(--surface3);
+  max-width:60px;
+}
+.conf-fill { height:100%; border-radius:2px; }
+
+.le-status {}
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.22rem 0.6rem;
+  border-radius: 5px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.sb-staged    { background:var(--cyan-dim); color:var(--cyan); }
+.sb-approved  { background:var(--green-dim); color:var(--green); }
+.sb-review    { background:rgba(255,214,0,0.1); color:var(--yellow); }
+.sb-running   { background:var(--orange-dim); color:var(--orange); }
+.sb-failed    { background:rgba(255,59,92,0.1); color:var(--red); }
+
+/* ── ACTIVITY LOG ── */
+.activity-log {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.log-line {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--text-2);
+}
+.ll-time { color: var(--text-3); white-space: nowrap; flex-shrink: 0; }
+.ll-level {
+  flex-shrink: 0;
+  font-weight: 700;
+  width: 50px;
+}
+.ll-info  { color: var(--cyan); }
+.ll-ok    { color: var(--green); }
+.ll-warn  { color: var(--yellow); }
+.ll-error { color: var(--red); }
+.ll-msg   { color: var(--text-2); line-height: 1.5; }
+
+/* ── BOTTOM GRID ── */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* ── SERVICE HEALTH ── */
+.service-list {
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.service-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.service-row:last-child { border-bottom: none; }
+.sr-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.sr-name { font-family: var(--mono); font-size: 0.78rem; color: var(--text); flex:1; }
+.sr-port { font-family: var(--mono); font-size: 0.68rem; color: var(--text-3); }
+.sr-latency { font-family: var(--mono); font-size: 0.68rem; color: var(--text-2); margin-left: auto; }
+.sr-status-text { font-family: var(--mono); font-size: 0.68rem; font-weight: 600; }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 0.85rem 1.2rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text);
+  z-index: 999;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.3s;
+  max-width: 360px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+#toast.show { transform: translateY(0); opacity: 1; }
+#toast .toast-icon { font-size: 1rem; }
+
+/* ── TERMINAL OUTPUT ── */
+.terminal-output {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--green);
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+  line-height: 1.7;
+}
+.terminal-output.visible { display: block; }
+.to-line { display: flex; gap: 0.5rem; }
+.to-prompt { color: var(--cyan); flex-shrink: 0; }
+.to-text { color: var(--text-2); }
+.to-text.success { color: var(--green); }
+.to-text.error { color: var(--red); }
+.to-text.info { color: var(--cyan); }
+.cursor-blink { animation: blink 1s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 2px; }
+
+@media(max-width:1024px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .campaign-form { grid-template-columns: 1fr; }
+  .log-entry { grid-template-columns: 80px 80px 1fr 80px; }
+  .le-type, .le-hook { display: none; }
+  .bottom-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-logo">S↑</div>
+      <span class="topbar-name">SentAIent <span>Orchestrator</span></span>
+      <span style="font-family:var(--mono);font-size:0.65rem;color:var(--text-3);margin-left:0.5rem;">v1.0 · /marketing</span>
+    </div>
+    <div class="topbar-status">
+      <div class="status-indicator"><div class="status-dot" id="n8nDot"></div> n8n :5678</div>
+      <div class="status-indicator"><div class="status-dot" id="redisDot"></div> redis :6379</div>
+      <div class="status-indicator"><div class="status-dot" id="minioDot"></div> minio :9000</div>
+      <div class="status-indicator"><div class="status-dot" id="mcpDot"></div> mcp :3100</div>
+      <div class="topbar-time" id="clock">--:--:--</div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Command</div>
+      <button class="nav-item active" onclick="showView('generate')">
+        <span class="nav-icon">⚡</span> Generate Campaign
+      </button>
+      <button class="nav-item" onclick="showView('staged')">
+        <span class="nav-icon">📂</span> Staged Assets
+        <span class="nav-badge" id="stagedCount">0</span>
+      </button>
+      <button class="nav-item" onclick="showView('approved')">
+        <span class="nav-icon">✅</span> Approved
+      </button>
+      <button class="nav-item" onclick="showView('review')">
+        <span class="nav-icon">⚠️</span> Needs Review
+      </button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Brands</div>
+      <button class="brand-pill" onclick="filterBrand('cloveh2o')">
+        <span class="bp-dot" style="background:#B85C2A"></span> CloveH2O
+      </button>
+      <button class="brand-pill" onclick="filterBrand('mindwave')">
+        <span class="bp-dot" style="background:#7B5EA7"></span> MindWave
+      </button>
+      <button class="brand-pill" onclick="filterBrand('sentaient')">
+        <span class="bp-dot" style="background:#00D4FF"></span> SentAIent
+      </button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">System</div>
+      <button class="nav-item" onclick="showView('config')">
+        <span class="nav-icon">⚙️</span> Brand House Codes
+      </button>
+      <button class="nav-item" onclick="window.open('http://localhost:5678','_blank')">
+        <span class="nav-icon">🔗</span> n8n Editor ↗
+      </button>
+      <button class="nav-item" onclick="window.open('http://localhost:7860','_blank')">
+        <span class="nav-icon">🔗</span> Langflow ↗
+      </button>
+      <button class="nav-item" onclick="window.open('http://localhost:9001','_blank')">
+        <span class="nav-icon">🔗</span> MinIO Console ↗
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- STATS ROW -->
+    <div class="stats-row">
+      <div class="stat-card" style="--accent:var(--cyan)">
+        <div class="sc-label">Campaigns Today</div>
+        <div class="sc-num" id="statToday">0</div>
+        <div class="sc-sub">↑ +0 from yesterday</div>
+      </div>
+      <div class="stat-card" style="--accent:var(--green)">
+        <div class="sc-label">Approved Assets</div>
+        <div class="sc-num" id="statApproved">0</div>
+        <div class="sc-sub">Ready to publish</div>
+      </div>
+      <div class="stat-card" style="--accent:var(--yellow)">
+        <div class="sc-label">Needs Review</div>
+        <div class="sc-num" id="statReview">0</div>
+        <div class="sc-sub">Confidence &lt; 90%</div>
+      </div>
+      <div class="stat-card" style="--accent:var(--orange)">
+        <div class="sc-label">Avg Confidence</div>
+        <div class="sc-num" id="statConf">—</div>
+        <div class="sc-sub">Across all campaigns</div>
+      </div>
+    </div>
+
+    <!-- CAMPAIGN GENERATOR -->
+    <div class="panel" id="view-generate">
+      <div class="panel-header">
+        <div class="panel-title"><span class="pt-icon">⚡</span> GENERATE_CAMPAIGN</div>
+        <button class="panel-action" onclick="resetForm()">↺ Reset</button>
+      </div>
+      <div class="campaign-form">
+        <div class="form-group">
+          <label class="form-label">Brand</label>
+          <select class="form-select" id="fBrand">
+            <option value="cloveh2o">CloveH2O</option>
+            <option value="mindwave">MindWave</option>
+            <option value="sentaient">SentAIent</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Campaign Type</label>
+          <select class="form-select" id="fCampaignType">
+            <option value="viral_hook">Viral Hook (30s)</option>
+            <option value="technical_deep_dive">Technical Deep Dive (90s)</option>
+            <option value="founder_story">Founder Story (60s)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Input Type</label>
+          <select class="form-select" id="fInputType" onchange="updateInputPlaceholder()">
+            <option value="text">Text / Prompt</option>
+            <option value="url">URL</option>
+            <option value="pdf">PDF Path</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Input Content</label>
+          <textarea class="form-textarea" id="fInputValue" placeholder="Describe the campaign angle, paste a URL, or enter a PDF path..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Output Formats</label>
+          <div class="format-checks">
+            <label class="format-check"><input type="checkbox" value="9:16" checked> 9:16 (Reels/TikTok)</label>
+            <label class="format-check"><input type="checkbox" value="1:1" checked> 1:1 (Feed)</label>
+            <label class="format-check"><input type="checkbox" value="16:9"> 16:9 (YouTube)</label>
+            <label class="format-check"><input type="checkbox" value="email"> Email Header</label>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-primary" id="generateBtn" onclick="generateCampaign()">
+            <span>⚡</span> Run Campaign
+          </button>
+          <button class="btn-secondary" onclick="testConnection()">Ping n8n</button>
+          <span style="font-family:var(--mono);font-size:0.7rem;color:var(--text-3);margin-left:auto;">
+            → POST /webhook/campaign-intake → n8n pipeline → /marketing/media/staging/
+          </span>
+        </div>
+      </div>
+
+      <!-- Terminal output -->
+      <div style="padding:0 1.25rem 1.25rem;">
+        <div class="terminal-output" id="terminalOutput"></div>
+      </div>
+    </div>
+
+    <!-- CAMPAIGN LOG TABLE -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title"><span class="pt-icon">📋</span> CAMPAIGN_LOG</div>
+        <button class="panel-action" onclick="refreshLog()">↺ Refresh</button>
+      </div>
+      <div class="campaign-log">
+        <div class="log-entry header">
+          <div>Campaign ID</div>
+          <div>Brand</div>
+          <div>Type</div>
+          <div>Viral Angle</div>
+          <div>Confidence</div>
+          <div>Status</div>
+        </div>
+        <div id="campaignLogBody">
+          <div style="padding:2rem 1.25rem;text-align:center;font-family:var(--mono);font-size:0.78rem;color:var(--text-3);">
+            No campaigns yet. Run your first campaign above. ↑
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM GRID -->
+    <div class="bottom-grid">
+
+      <!-- ACTIVITY LOG -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><span class="pt-icon">📡</span> ACTIVITY_LOG</div>
+          <button class="panel-action" onclick="clearLog()">Clear</button>
+        </div>
+        <div class="activity-log" id="activityLog">
+          <div class="log-line">
+            <span class="ll-time">--:--:--</span>
+            <span class="ll-level ll-info">INFO</span>
+            <span class="ll-msg">Orchestrator dashboard initialized. Awaiting commands.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERVICE HEALTH -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><span class="pt-icon">🔬</span> SERVICE_HEALTH</div>
+          <button class="panel-action" onclick="checkHealth()">Check All</button>
+        </div>
+        <div class="service-list">
+          <div class="service-row">
+            <div class="sr-dot" id="health-n8n" style="background:var(--text-3)"></div>
+            <div class="sr-name">n8n Orchestrator</div>
+            <div class="sr-port">:5678</div>
+            <div class="sr-latency" id="lat-n8n">—</div>
+            <div class="sr-status-text" id="txt-n8n" style="color:var(--text-3)">unknown</div>
+          </div>
+          <div class="service-row">
+            <div class="sr-dot" id="health-langflow" style="background:var(--text-3)"></div>
+            <div class="sr-name">Langflow Agent Builder</div>
+            <div class="sr-port">:7860</div>
+            <div class="sr-latency" id="lat-langflow">—</div>
+            <div class="sr-status-text" id="txt-langflow" style="color:var(--text-3)">unknown</div>
+          </div>
+          <div class="service-row">
+            <div class="sr-dot" id="health-minio" style="background:var(--text-3)"></div>
+            <div class="sr-name">MinIO Asset Storage</div>
+            <div class="sr-port">:9000</div>
+            <div class="sr-latency" id="lat-minio">—</div>
+            <div class="sr-status-text" id="txt-minio" style="color:var(--text-3)">unknown</div>
+          </div>
+          <div class="service-row">
+            <div class="sr-dot" id="health-mcp" style="background:var(--text-3)"></div>
+            <div class="sr-name">MCP Server</div>
+            <div class="sr-port">:3100</div>
+            <div class="sr-latency" id="lat-mcp">—</div>
+            <div class="sr-status-text" id="txt-mcp" style="color:var(--text-3)">unknown</div>
+          </div>
+          <div class="service-row">
+            <div class="sr-dot" id="health-api" style="background:var(--text-3)"></div>
+            <div class="sr-name">Campaign API</div>
+            <div class="sr-port">:8080</div>
+            <div class="sr-latency" id="lat-api">—</div>
+            <div class="sr-status-text" id="txt-api" style="color:var(--text-3)">unknown</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MCP REFERENCE -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title"><span class="pt-icon">🔌</span> MCP_REFERENCE — Antigravity IDE Tools</div>
+      </div>
+      <div style="padding:1.25rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;">
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.72rem;color:var(--cyan);margin-bottom:0.4rem;">market__generate_campaign</div>
+          <div style="font-size:0.78rem;color:var(--text-2);line-height:1.5;">Trigger full pipeline. Pass brand, input_type, input_value, campaign_type, formats.</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.72rem;color:var(--cyan);margin-bottom:0.4rem;">market__get_campaign_status</div>
+          <div style="font-size:0.78rem;color:var(--text-2);line-height:1.5;">Poll status of any campaign by campaign_id. Returns confidence, status, path.</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.72rem;color:var(--cyan);margin-bottom:0.4rem;">market__list_staged_assets</div>
+          <div style="font-size:0.78rem;color:var(--text-2);line-height:1.5;">List everything in /staging. Filter by brand or pass "all".</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.72rem;color:var(--cyan);margin-bottom:0.4rem;">market__approve_asset</div>
+          <div style="font-size:0.78rem;color:var(--text-2);line-height:1.5;">Move campaign from /staging to /approved. Pass campaign_id.</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.72rem;color:var(--cyan);margin-bottom:0.4rem;">market__get_brand_config</div>
+          <div style="font-size:0.78rem;color:var(--text-2);line-height:1.5;">Read full house codes for any brand. Returns voice, visual, content config.</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1rem;">
+          <div style="font-family:var(--mono);font-size:0.72rem;color:var(--cyan);margin-bottom:0.4rem;">market__list_brands</div>
+          <div style="font-size:0.78rem;color:var(--text-2);line-height:1.5;">List all configured brands with name, tagline, archetype.</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- TOAST -->
+<div id="toast"><span class="toast-icon">✓</span><span id="toastMsg"></span></div>
+
+<script>
+// ── State ─────────────────────────────────────────────────
+const API_BASE = 'http://localhost:8080';
+const N8N_BASE = 'http://localhost:5678';
+let campaigns = JSON.parse(localStorage.getItem('sentaient_campaigns') || '[]');
+
+// ── Clock ─────────────────────────────────────────────────
+function updateClock() {
+  document.getElementById('clock').textContent = new Date().toTimeString().slice(0,8);
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ── Toast ─────────────────────────────────────────────────
+function showToast(msg, icon='✓') {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.querySelector('.toast-icon').textContent = icon;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ── Activity log ──────────────────────────────────────────
+function addLog(level, msg) {
+  const log = document.getElementById('activityLog');
+  const time = new Date().toTimeString().slice(0,8);
+  const line = document.createElement('div');
+  line.className = 'log-line';
+  line.innerHTML = `<span class="ll-time">${time}</span><span class="ll-level ll-${level}">${level.toUpperCase().padEnd(5)}</span><span class="ll-msg">${msg}</span>`;
+  log.appendChild(line);
+  log.scrollTop = log.scrollHeight;
+}
+
+function clearLog() {
+  document.getElementById('activityLog').innerHTML = '';
+  addLog('info', 'Activity log cleared.');
+}
+
+// ── Terminal ──────────────────────────────────────────────
+function termLine(prompt, text, cls='') {
+  const t = document.getElementById('terminalOutput');
+  t.classList.add('visible');
+  const line = document.createElement('div');
+  line.className = 'to-line';
+  line.innerHTML = `<span class="to-prompt">${prompt}</span><span class="to-text ${cls}">${text}</span>`;
+  t.appendChild(line);
+  t.scrollTop = t.scrollHeight;
+}
+
+function clearTerminal() {
+  const t = document.getElementById('terminalOutput');
+  t.innerHTML = '';
+  t.classList.remove('visible');
+}
+
+// ── Generate campaign ─────────────────────────────────────
+async function generateCampaign() {
+  const brand       = document.getElementById('fBrand').value;
+  const campaignType = document.getElementById('fCampaignType').value;
+  const inputType   = document.getElementById('fInputType').value;
+  const inputValue  = document.getElementById('fInputValue').value.trim();
+  const formats     = [...document.querySelectorAll('.format-check input:checked')].map(c => c.value);
+
+  if (!inputValue) { showToast('Input content is required', '⚠️'); return; }
+  if (!formats.length) { showToast('Select at least one output format', '⚠️'); return; }
+
+  const btn = document.getElementById('generateBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="cursor-blink">▋</span> Running...';
+  clearTerminal();
+
+  const payload = { brand, input_type: inputType, input_value: inputValue, campaign_type: campaignType, requested_formats: formats };
+
+  termLine('$', `POST ${N8N_BASE}/webhook/campaign-intake`, 'info');
+  termLine('→', `brand=${brand} type=${campaignType} formats=${formats.join(',')}`, '');
+  addLog('info', `Campaign triggered — brand:${brand} type:${campaignType}`);
+
+  try {
+    const res = await fetch(`${N8N_BASE}/webhook/campaign-intake`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ body: payload }),
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
+    const data = await res.json();
+
+    termLine('✓', `Campaign ID: ${data.campaign_id}`, 'success');
+    termLine('✓', `Status: ${data.status} | Confidence: ${(data.confidence * 100).toFixed(0)}%`, 'success');
+    if (data.viral_angle) termLine('→', `Hook: "${data.viral_angle}"`, '');
+    termLine('→', `Staged at: ${data.staging_path || '/marketing/media/staging/' + data.campaign_id}`, 'info');
+
+    addLog('ok', `Campaign ${data.campaign_id} staged. Confidence: ${(data.confidence*100).toFixed(0)}%`);
+    showToast(`Campaign staged — ${data.campaign_id}`, '✓');
+
+    campaigns.unshift({ ...data, created_at: new Date().toISOString() });
+    localStorage.setItem('sentaient_campaigns', JSON.stringify(campaigns.slice(0, 50)));
+    renderCampaignLog();
+    updateStats();
+
+  } catch(err) {
+    termLine('✗', `Error: ${err.message}`, 'error');
+    addLog('error', `Campaign failed: ${err.message}`);
+    showToast('Campaign failed — check activity log', '✗');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<span>⚡</span> Run Campaign';
+}
+
+// ── Render campaign log ───────────────────────────────────
+function renderCampaignLog() {
+  const body = document.getElementById('campaignLogBody');
+  if (!campaigns.length) {
+    body.innerHTML = '<div style="padding:2rem 1.25rem;text-align:center;font-family:var(--mono);font-size:0.78rem;color:var(--text-3);">No campaigns yet. Run your first campaign above. ↑</div>';
+    return;
+  }
+  body.innerHTML = campaigns.map(c => {
+    const conf = c.confidence || 0;
+    const confPct = (conf * 100).toFixed(0);
+    const confColor = conf >= 0.9 ? 'var(--green)' : conf >= 0.7 ? 'var(--yellow)' : 'var(--red)';
+    const statusClass = { staged:'sb-staged', approved:'sb-approved', needs_human_review:'sb-review', running:'sb-running', failed:'sb-failed' }[c.status] || 'sb-staged';
+    const hook = c.viral_angle || c.strategy?.VIRAL_ANGLE || '—';
+    return `
+    <div class="log-entry">
+      <div class="le-id" title="${c.campaign_id}">${c.campaign_id?.slice(-16) || '—'}</div>
+      <div class="le-brand"><span class="brand-tag bt-${c.brand}">${c.brand}</span></div>
+      <div class="le-type">${c.campaign_type?.replace('_',' ') || '—'}</div>
+      <div class="le-hook" title="${hook}">${hook.slice(0,60)}${hook.length>60?'…':''}</div>
+      <div class="le-confidence">
+        <div class="conf-bar">
+          <div class="conf-track"><div class="conf-fill" style="width:${confPct}%;background:${confColor}"></div></div>
+          <span style="font-size:0.68rem;color:${confColor}">${confPct}%</span>
+        </div>
+      </div>
+      <div class="le-status"><span class="status-badge ${statusClass}">${c.status?.replace('_',' ') || 'staged'}</span></div>
+    </div>`;
+  }).join('');
+}
+
+// ── Stats ─────────────────────────────────────────────────
+function updateStats() {
+  const today = campaigns.filter(c => new Date(c.created_at).toDateString() === new Date().toDateString());
+  const approved = campaigns.filter(c => c.status === 'approved');
+  const review = campaigns.filter(c => c.status === 'needs_human_review');
+  const avgConf = campaigns.length ? (campaigns.reduce((a,c)=>a+(c.confidence||0),0)/campaigns.length*100).toFixed(0)+'%' : '—';
+
+  document.getElementById('statToday').textContent = today.length;
+  document.getElementById('statApproved').textContent = approved.length;
+  document.getElementById('statReview').textContent = review.length;
+  document.getElementById('statConf').textContent = avgConf;
+  document.getElementById('stagedCount').textContent = campaigns.filter(c=>c.status==='staged').length;
+}
+
+// ── Health check ──────────────────────────────────────────
+async function checkService(id, url, dotId) {
+  const dot = document.getElementById(`health-${id}`);
+  const lat = document.getElementById(`lat-${id}`);
+  const txt = document.getElementById(`txt-${id}`);
+  const topDot = document.getElementById(`${id}Dot`);
+  const start = Date.now();
+  try {
+    await fetch(url, { mode: 'no-cors', signal: AbortSignal.timeout(3000) });
+    const ms = Date.now() - start;
+    dot.style.background = 'var(--green)';
+    if(topDot) topDot.style.background = 'var(--green)';
+    lat.textContent = `${ms}ms`;
+    txt.textContent = 'online';
+    txt.style.color = 'var(--green)';
+    addLog('ok', `${id} online (${ms}ms)`);
+  } catch(e) {
+    dot.style.background = 'var(--red)';
+    if(topDot) topDot.style.background = 'var(--red)';
+    lat.textContent = '—';
+    txt.textContent = 'offline';
+    txt.style.color = 'var(--red)';
+    addLog('warn', `${id} unreachable — is the container running?`);
+  }
+}
+
+async function checkHealth() {
+  addLog('info', 'Checking all services...');
+  await Promise.all([
+    checkService('n8n', `${N8N_BASE}/healthz`, 'n8nDot'),
+    checkService('langflow', 'http://localhost:7860/health', 'langflowDot'),
+    checkService('minio', 'http://localhost:9000/minio/health/live', 'minioDot'),
+    checkService('mcp', 'http://localhost:3100', 'mcpDot'),
+    checkService('api', `${API_BASE}/health`, 'apiDot'),
+  ]);
+}
+
+// ── Misc ──────────────────────────────────────────────────
+function resetForm() {
+  document.getElementById('fInputValue').value = '';
+  clearTerminal();
+}
+
+function updateInputPlaceholder() {
+  const type = document.getElementById('fInputType').value;
+  const placeholders = {
+    text: 'Describe the campaign angle or product you want to promote...',
+    url: 'https://cloveh2o.com/product/original-blend',
+    pdf: '/marketing/config/product-brief.pdf'
+  };
+  document.getElementById('fInputValue').placeholder = placeholders[type];
+}
+
+function filterBrand(brand) {
+  addLog('info', `Filtering log by brand: ${brand}`);
+  showToast(`Showing ${brand} campaigns`, '🔍');
+}
+
+function refreshLog() {
+  renderCampaignLog();
+  addLog('info', 'Campaign log refreshed.');
+}
+
+async function testConnection() {
+  addLog('info', 'Pinging n8n...');
+  await checkService('n8n', `${N8N_BASE}/healthz`, 'n8nDot');
+}
+
+function showView(view) {
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  addLog('info', `View: ${view}`);
+}
+
+// ── Init ──────────────────────────────────────────────────
+renderCampaignLog();
+updateStats();
+setTimeout(checkHealth, 800);
+</script>
+</body>
+</html>
